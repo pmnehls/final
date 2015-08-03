@@ -1,0 +1,72 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+
+p {
+  font-size: 18px;
+}
+
+nav h1 {
+  background: #009;
+  color: white;
+  padding: 12px;
+}
+
+nav a, nav a:visited {
+ text-decoration: none;
+ color: white;
+}
+
+h2 {
+ color: black;
+}
+
+.rating {
+ color: white;
+ background-color: green;
+ font-weight: bolder;
+ font-size: 20px;
+ border: solid 2px black;
+ border-radius: 5px;
+ padding: 4px;
+}
+
+#restaurant-header {
+ color: green;
+ /*background-color: red;*/
+ font-weight: bold;
+ font-size: 24px;
+ /*border-radius: 5px;*/
+ /*padding: 5px;*/
+}
+
+img {
+ float: center;
+ /*margin-right: 40px;*/
+ border-radius: 8px;
+ /*box-shadow: 8px 8px 4px gray;*/
+ /*width: "300px";*/
+}
+
+p {
+ margin-top: 24px;
+ margin-bottom: 24px;
+}
+
+.restaurant {
+  /*width: 75%;*/
+  text-align: center;
+}

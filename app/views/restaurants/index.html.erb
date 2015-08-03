@@ -1,0 +1,58 @@
+<h1><span id= "restaurant-header">Browse All Restaurants</span>
+  <small>
+    <a class="btn btn-success pull-right" href="/restaurants/new">Add a new restaurant</a>
+  </small>
+</h1>
+
+<p>This is a list of all restaurants currently available on FoodEase</p>
+
+<table class='table table-striped'>
+	<thead>
+		<tr>
+			<th width="30%">Name</th>
+			<th>Category</th>
+			<th>Neighborhood</th>
+			<th>Price</th>
+			<th>Rating</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @restaurants.each do |restaurant| %>
+			<tr>
+				<td>
+					<%= link_to restaurant.name, "/restaurants/#{restaurant.id}" %>
+				</td>
+				<td>
+					<%= restaurant.category.name %>
+				</td>
+				<td>
+					<%= restaurant.neighborhood.name %>
+				</td>
+				<td>
+					<% if restaurant.price == 1 %>
+						$
+					<% elsif restaurant.price == 2 %>
+						$$
+					<% elsif restaurant.price == 3 %>
+						$$$
+					<% elsif restaurant.price == 4 %>
+						$$$$
+					<% else %>
+						$$$$$
+					<% end %>
+				</td>
+				<td>
+					<%= restaurant.rating%>
+				</td>
+
+				<td><%= link_to "Delete", "/restaurants/#{restaurant.id}", :method => "delete" %> </td>
+				<td><%= link_to "Edit", "/restaurants/#{restaurant.id}/edit" %></td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
+
+<!-- <% response = Yelp.client.search('Chicago') %> -->
+
+<!-- # <%=response.businesses[0].name%> -->
+<!-- # <%=response.businesses[1].name%> -->

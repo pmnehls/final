@@ -1,0 +1,53 @@
+<h1> Add a new restaurant </h1>
+
+<% if @restaurant.errors.any? %>
+	<p> <%=@restaurant.errors.full_messages%> </p>
+<% end %>
+
+<%= form_tag "/restaurants" do %>
+	<div>
+		<label>Restaurant Name: </label>
+		<input type="text" size="35" name="name" value="<%=@restaurant.name%>">
+	</div>
+
+	<div>
+		<label>Category: </label>
+		<select name="category_id">
+			<% Category.order('name').all.each do |c| %>
+				<option value="<%= c.id %>"><%= c.name %></option>
+			<% end %>
+		</select>
+	</div>
+
+	<div>
+		<label>Neighborhood: </label>
+		<select name="neighborhood_id">
+			<% Neighborhood.order('name').all.each do |n| %>
+				<option value="<%= n.id %>"><%= n.name %></option>
+			<% end %>
+		</select>
+	</div>
+
+	<div>
+		<label>Address: </label>
+		<input type="text" size="50" name="address" value="<%=@restaurant.address%>">
+	</div>
+
+	<div>
+		<label>Cost (1-5): </label>
+		<input type="number" name="price" value="<%=@restaurant.price%>" min="1" max="5">
+	</div>
+
+	<div>
+		<label>Rating (1-5): </label>
+		<input type="number" name="rating" value="<%=@restaurant.rating%>" min="1" max="5" step="0.5">
+	</div>
+
+	<div>
+		<label>Image URL: </label>
+		<input type="text" size="50" name="image_url" value="<%=@restaurant.image_url%>">
+	</div>
+
+	<input type="submit" value="Add Restaurant">
+
+<% end %>

@@ -1,0 +1,29 @@
+Restaurant
+  name: string
+  category_id: integer
+  neighborhood_id: integer
+  address: string
+  price: integer
+  rating: float
+  image_url: string
+
+User
+  name: string
+  password: string
+
+Category
+  name: string
+
+Neighborhood
+  name: string
+
+Review
+  rating: integer
+  recommended: boolean
+  description: text
+  restaurant_id: integer
+  user_id: integer
+
+List
+  user_id: integer
+  restaurant_id: integer

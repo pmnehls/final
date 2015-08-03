@@ -1,0 +1,10 @@
+<div class="restaurant">
+  <h2><%= @restaurant.name %>
+    <span class="rating"><%= @restaurant.rating %></span>
+  </h2>
+  <h5><%= @restaurant.category.name%></h5>
+  <h5><%= @restaurant.neighborhood.name%></h5>
+  <h5><%= @restaurant.address%></h5>
+
+
+  <%= image_tag @restaurant.image_url, :size => '300x200' %>
