@@ -1,28 +1,12 @@
-== README
+==README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Restaurant is the only RESTful resource as of now. I am in the process of setting up Yelp API 
+to streamline the process of searching and adding restaurants
 
-Things you may want to cover:
+The eventual goal of this app is to allow users to post their favorite restaurants and find similar
+restaurants that they havent tried. A restaurants show page will (hopefully/eventually) show the users that have liked it, as well as the restaurants that are most liked by users that also like said restaurant
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Users will have the ability to customize their own page with a profile photo and bio. The tentative plan is for users
+to have a top 5 restaurant list, along with a favorite cheap restaurant and favorite splurge restaurant. In addition, they can also have a list of recommended places.
 
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
