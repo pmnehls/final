@@ -14,7 +14,12 @@
 		<label>Category: </label>
 		<select name="category_id">
 			<% Category.order('name').all.each do |c| %>
-				<option value="<%= c.id %>"><%= c.name %></option>
+				<% if c.id == @restaurant.category_id %>
+					<option selected="selected" value="<%=c.id%>">
+					<%= c.name %>
+				<% else %>
+					<option value="<%= c.id %>"><%= c.name %></option>
+				<% end %>
 			<% end %>
 		</select>
 	</div>
@@ -23,7 +28,12 @@
 		<label>Neighborhood: </label>
 		<select name="neighborhood_id">
 			<% Neighborhood.order('name').all.each do |n| %>
-				<option value="<%= n.id %>"><%= n.name %></option>
+				<% if n.id == @restaurant.neighborhood_id %>
+					<option selected="selected" value="<%=n.id%>">
+					<%= n.name %>
+				<% else %>
+					<option value="<%= n.id %>"><%= n.name %></option>
+				<% end %>
 			<% end %>
 		</select>
 	</div>
