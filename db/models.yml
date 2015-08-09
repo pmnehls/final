@@ -9,7 +9,9 @@ Restaurant
 
 User
   name: string
+  email: string
   password: string
+  admin: boolean(false)
 
 Category
   name: string
@@ -27,3 +29,6 @@ Review
 List
   user_id: integer
   restaurant_id: integer
+
+Session
+  user_id: integer

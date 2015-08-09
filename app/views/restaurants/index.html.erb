@@ -47,12 +47,11 @@
 
 				<td><%= link_to "Delete", "/restaurants/#{restaurant.id}", :method => "delete" %> </td>
 				<td><%= link_to "Edit", "/restaurants/#{restaurant.id}/edit" %></td>
+				<% if session[:user_id] %>
+					<td><%= button_to "Add to Your List", lists_path, params: {:restaurant_id => restaurant.id}, 
+					:class => "btn btn-primary btn-xs" %>
+				<% end %>
 			</tr>
 		<% end %>
 	</tbody>
 </table>
-
-<!-- <% response = Yelp.client.search('Chicago') %> -->
-
-<!-- # <%=response.businesses[0].name%> -->
-<!-- # <%=response.businesses[1].name%> -->

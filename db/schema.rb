@@ -53,9 +53,17 @@ ActiveRecord::Schema.define(version: 0) do
   add_index "reviews", ["restaurant_id"], name: "index_reviews_on_restaurant_id"
   add_index "reviews", ["user_id"], name: "index_reviews_on_user_id"
 
+  create_table "sessions", force: :cascade do |t|
+    t.integer "user_id"
+  end
+
+  add_index "sessions", ["user_id"], name: "index_sessions_on_user_id"
+
   create_table "users", force: :cascade do |t|
-    t.string "name"
-    t.string "password"
+    t.string  "name"
+    t.string  "password"
+    t.string  "email"
+    t.boolean "admin",    default: false
   end
 
 end

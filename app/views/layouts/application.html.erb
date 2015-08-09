@@ -27,8 +27,10 @@
   		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     		<ul class="nav navbar-nav">
       		<li><a href="/restaurants">Restaurants</a></li>
-      		<li><a href="#">Your Recommendations</a></li>
-      		<li><a href="#">Your Restaurant Queue</a></li>
+      		<% if session[:user_id] %>
+            <li><a href="/wall">Your Wall</a></li>
+          <% end %>
+      		<li><a href="#">Recommend-o-matic</a></li>
 
 		      <form class="navbar-form navbar-left" role="search", action = "/restaurants">
     		    <div class="form-group">
@@ -41,8 +43,15 @@
 
 
     		<ul class="nav navbar-nav navbar-right">
-      		<li><a href="#">Sign Up</a></li>
-      		<li><a href="#">Login</a></li>
+          <% if session[:user_id] %>
+            <li><%= User.find(session[:user_id]).email %></li>
+            <li><a href="/profile">My Account</a></li>
+            <li><a href="/logout">Sign Out</a></li>
+          <% else %>
+      		  <li><a href="/users/new">Sign Up</a></li>
+      		  <li><a href="/sessions/new">Login</a></li>
+          <% end %>
+
     		</ul>
   		</div>
     </div>
@@ -50,7 +59,14 @@
 
   <div class="container">
 		
+    <% if notice.present? %>
+      <div class="alert alert-info">
+        <%= notice %>
+      </div>
+    <% end %>
+
 		<%= yield %>
+
 	</div>
 
 </body>

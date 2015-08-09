@@ -2,9 +2,15 @@ Rails.application.routes.draw do
 
   root 'restaurants#index'
 
+  get '/logout' => 'sessions#destroy'
+  get '/profile' => 'users#show'
+  get '/wall' => 'lists#show'
+
   resources :restaurants
   resources :users
   resources :reviews
+  resources :sessions
+  resources :lists
 
   # get '/restaurants' => 'restaurants#index'
   # get '/restaurants/new' => 'restaurants#new'

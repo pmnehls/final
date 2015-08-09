@@ -1,12 +1,14 @@
 Restaurant.delete_all
 Category.delete_all
 Neighborhood.delete_all
-# User.delete_all
+User.delete_all
+List.delete_all
 # Review.delete_all
 
 restaurant_data = JSON.parse(open('db/restaurants.json').read)
 category_data = JSON.parse(open('db/categories.json').read)
 neighborhood_data = JSON.parse(open('db/neighborhoods.json').read)
+user_data = JSON.parse(open('db/users.json').read)
 
 restaurant_data.each do |restaurant_hash|
 	restaurant = Restaurant.new
@@ -20,7 +22,6 @@ restaurant_data.each do |restaurant_hash|
 		category.save
 	end
 	restaurant.category_id = category.id
-  # restaurant.category = restaurant_hash['category']
 
   # initialize neighborhoods
   neighborhood = Neighborhood.find_by(name: restaurant_hash['neighborhood'])
@@ -30,7 +31,6 @@ restaurant_data.each do |restaurant_hash|
   	neighborhood.save
   end
   restaurant.neighborhood_id = neighborhood.id
-	# restaurant.neighborhood = restaurant_hash['neighborhood']
 
 	restaurant.address = restaurant_hash['address']
 	restaurant.price = restaurant_hash['price']
@@ -55,6 +55,14 @@ neighborhood_data.each do |neighborhood_hash|
 		neighborhood.name = neighborhood_hash['name']
 		neighborhood.save
 	end
+end
+
+user_data.each do|user_hash|
+	user = User.new
+	user.name = user_hash['name']
+	user.email = user_hash['email']
+	user.password = user_hash['password']
+	user.save
 end
 
 puts "Seeded successfully!"

@@ -1,0 +1,14 @@
+
+<ul>
+	<% List.where(:user_id => session[:user_id]).find_each do |list|%> 
+		<div class="list-element">
+			<span><%= image_tag list.restaurant.image_url, :class => "list-thumbnail" %></span>
+			<ul class="plain">
+				<li><%= link_to list.restaurant.name, "/restaurants/#{list.restaurant.id}", :class => "list-link" %></li></span>
+				<li><%= list.restaurant.category.name %></li>
+				<li><%= list.restaurant.neighborhood.name %></li>
+			</ul>
+		</div>
+	<% end %>
+</ul>
+
