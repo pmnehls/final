@@ -61,9 +61,9 @@ ActiveRecord::Schema.define(version: 0) do
 
   create_table "users", force: :cascade do |t|
     t.string  "name"
-    t.string  "password"
     t.string  "email"
-    t.boolean "admin",    default: false
+    t.boolean "admin",           default: false
+    t.string  "password_digest"
   end
 
 end

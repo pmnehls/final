@@ -13,7 +13,6 @@ class RestaurantsController < ApplicationController
 		restaurant.category_id = params["category_id"]
 		restaurant.neighborhood_id = params["neighborhood_id"]
 		restaurant.address = params["address"]
-		restaurant.price = params["price"]
 		restaurant.rating = params["rating"]
 		restaurant.image_url = params["image_url"]
 		restaurant.save
@@ -38,7 +37,9 @@ class RestaurantsController < ApplicationController
 		@restaurant.price = params["price"]
 		@restaurant.rating = params["rating"]
 		@restaurant.image_url = params["image_url"]
+
 		if @restaurant.save
+			flash[:notice] = "#{@restaurant.name} added to FoodEase"
 			redirect_to root_url
 		else
 			render 'new'
@@ -50,5 +51,10 @@ class RestaurantsController < ApplicationController
 		@restaurant.delete
 		redirect_to "/restaurants"
 	end
+
+	def search
+    	parameters = { term: params[:term], limit: 10 }
+    	@response = Yelp.client.search('Chicago', parameters)
+  	end
 
 end

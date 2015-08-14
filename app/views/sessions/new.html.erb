@@ -1,5 +1,5 @@
-<div class="page-header">
-  <h1>Log in</h1>
+<div>
+  <h2>Log in</h2>
 </div>
 
 <% if @session.errors.any? %>
@@ -10,17 +10,23 @@
   </ul>
 <% end %>
 
-<%= form_tag "/sessions" do %>
+<%= form_tag "/sessions", :class => "form-horizontal" do %>
 
-  <p>
-    <%= label_tag :email %>
-    <%= text_field_tag :email %>
-  </p>
+  <div class="form-group">
+    <%= label_tag :email%>
+    <%= text_field_tag :email%>
+  </div>
 
-  <p>
+  <div class="form-group">
     <%= label_tag :password %>
-    <%= text_field_tag :password %>
-  </p>
+    <%= password_field_tag :password %>
+  </div>
 
-  <%= submit_tag "Log in" %>
+  <div class="form-group">
+    <div class="ontrol-label col-sm-2">
+      <%= submit_tag "Log in", :class => "btn btn-default" %>
+    </div>
+  </div>
+
 <% end %>
+

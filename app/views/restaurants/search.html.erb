@@ -1,0 +1,49 @@
+<h1> Search Results </h1>
+<ul>
+	<% @response.businesses.each do |r|%> 
+		<div class="search-element">
+			<span><%= image_tag r.image_url, :class => "search-thumbnail" %></span>
+			<div style="float: left"><ul class="plain">
+				<li class= "list-link"><%= r.name%></li>
+				<li><%= r.categories[0][0] %></li>
+				<li><%= r.location.neighborhoods[0] %></li>
+			</ul></div>
+
+
+			<!-- Convert the category into an id number, or create new category if necessary-->
+			<% c = Category.find_by(name: r.categories[0][0])%>
+			<% if c == nil %>
+				<%category = Category.new%>
+				<%category.name = r.categories[0][0]%>
+				<%category.save%>
+				<%cat_id = category.id%>
+			<% else %>
+				<%cat_id = c.id%>
+			<% end %>
+
+			<!-- Convert the category into an id number, or create new category if necessary-->
+			<% n = Neighborhood.find_by(name: r.location.neighborhoods[0])%>
+			<% if n == nil %>
+				<%neighborhood = Neighborhood.new%>
+				<%neighborhood.name = r.location.neighborhoods[0]%>
+				<%neighborhood.save%>
+				<%n_id = neighborhood.id%>
+			<% else %>
+				<%n_id = n.id%>
+			<% end %>
+
+			<div style="float: left">
+			<%= button_to "Add to FoodEase", restaurants_path, 
+				params: {:name => r.name, :category_id => cat_id, :neighborhood_id => n_id,
+				         :rating => r.rating, :address => r.location.address, :image_url=> r.image_url},
+								 :class => "btn btn-primary btn-xs" %>
+			</div>
+
+			<% content_tag :button, :type => :submit, :class => :positive do %>
+   			<%= image_tag r.image_url, :class => "search-thumbnail"%>
+   			Help
+			<% end %>
+
+		</div>
+	<% end %>
+</ul>

@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   get '/logout' => 'sessions#destroy'
   get '/profile' => 'users#show'
   get '/wall' => 'lists#show'
+  get '/initial' => 'sessions#create'
+  post '/yelp' => 'restaurants#search'
 
   resources :restaurants
   resources :users

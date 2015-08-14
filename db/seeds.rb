@@ -33,7 +33,7 @@ restaurant_data.each do |restaurant_hash|
   restaurant.neighborhood_id = neighborhood.id
 
 	restaurant.address = restaurant_hash['address']
-	restaurant.price = restaurant_hash['price']
+	# restaurant.price = restaurant_hash['price']
 	restaurant.rating = restaurant_hash['rating']
 	restaurant.image_url = restaurant_hash['image_url']
 	restaurant.save
