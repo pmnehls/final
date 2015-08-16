@@ -2,9 +2,26 @@
   <h2><%= @restaurant.name %>
     <span class="rating"><%= @restaurant.rating %></span>
   </h2>
-  <h5><%= @restaurant.category.name%></h5>
-  <h5><%= @restaurant.neighborhood.name%></h5>
-  <h5><%= @restaurant.address%></h5>
+  <h5><%= @restaurant.category.name %></h5>
+  <h5><%= @restaurant.neighborhood.name %></h5>
+  <h5><%= @restaurant.address %></h5>
+
+  <%= image_tag @restaurant.image_url, :size => '400x300' %>
+
+</div>
+
+<div class="restaraunt-users-block">
+	<h4 style="text-align: center; text-decoration: underline">
+		<% if @restaurant.users.count == 1 %>
+			1 user has added this restaurant to their wall
+		<% else %>
+			<%= @restaurant.users.count %> users have added this restaurant to their wall
+		<% end %>
+	</h4>
+
+	<% @restaurant.users.each do |user| %>
+		<%= link_to user.username, "/wall/#{user.id}", type: "button", :class =>"btn btn-info"%>
+	<% end %>
 
 
-  <%= image_tag @restaurant.image_url, :size => '240x160' %>
+</div>

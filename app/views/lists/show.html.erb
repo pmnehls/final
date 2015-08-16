@@ -1,6 +1,6 @@
 
 <ul>
-	<% List.where(:user_id => session[:user_id]).find_each do |list|%> 
+	<% @lists.each do |list| %>
 		<div class="list-element">
 			<span><%= image_tag list.restaurant.image_url, :class => "list-thumbnail" %></span>
 			<ul class="plain">

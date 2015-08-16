@@ -4,7 +4,11 @@ class UsersController < ApplicationController
 	end
 
 	def show
-		@user = User.find(session[:user_id])
+		if params[:id].to_i != session[:user_id]
+			redirect_to root_url, notice: "You can only look at your own account."
+		else
+			@user = User.find(params[:id])
+		end
 	end
 
 	def new
@@ -13,7 +17,7 @@ class UsersController < ApplicationController
 
 	def create
 		@user = User.new
-		@user.name = params[:name]
+		@user.username = params[:username]
 		@user.email = params[:email]
 		@user.password = params[:password]
 		@user.password_confirmation = params[:password_confirmation]
@@ -27,11 +31,11 @@ class UsersController < ApplicationController
 	end
 
 	def edit
-		@user = User.find_by(params[:id])
+		@user = User.find(params["id"])
 	end
 
 	def update
-		@user.name = params[:name]
+		@user.username = params[:username]
 		@user.email = params[:password]
 		@user.password = params[:password]
 		if @user.save

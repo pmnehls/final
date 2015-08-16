@@ -28,7 +28,7 @@
     		<ul class="nav navbar-nav">
       		<li><a href="/restaurants">Restaurants</a></li>
       		<% if session[:user_id] %>
-            <li><a href="/wall">Your Wall</a></li>
+            <li><%= link_to "Your Wall", "wall/#{session[:user_id]}" %></li>
           <% end %>
       		<li><a href="#">Recommend-o-matic</a></li>
 
@@ -41,7 +41,7 @@
       		</form>
 
           <% if session[:user_id] %>
-          <li><p class="navbar-text"><%= User.find(session[:user_id]).email %></p></li>
+          <li><p class="navbar-text">Hello, <%= User.find(session[:user_id]).username %></p></li>
 
           <% end %>
     		</ul>
@@ -49,7 +49,7 @@
 
     		<ul class="nav navbar-nav navbar-right">
           <% if session[:user_id] %>
-            <li><a href="/profile">My Account</a></li>
+            <li><a href="/account">My Account</a></li>
             <li><a href="/logout">Sign Out</a></li>
           <% else %>
       		  <li><a href="/users/new">Sign Up</a></li>

@@ -36,7 +36,12 @@ class RestaurantsController < ApplicationController
 		@restaurant.address = params["address"]
 		@restaurant.price = params["price"]
 		@restaurant.rating = params["rating"]
-		@restaurant.image_url = params["image_url"]
+
+		# editing string to link to a higher res photo from yelp
+		# original API response is 100x100
+
+		img = params["image_url"].chomp('ms.jpg') << "o.jpg"
+		@restaurant.image_url = img
 
 		if @restaurant.save
 			flash[:notice] = "#{@restaurant.name} added to FoodEase"
@@ -53,7 +58,7 @@ class RestaurantsController < ApplicationController
 	end
 
 	def search
-    	parameters = { term: params[:term], limit: 10 }
+    	parameters = { term: params[:term], limit: 10, category_filter: 'restaurants' }
     	@response = Yelp.client.search('Chicago', parameters)
   	end
 

@@ -8,7 +8,7 @@ Restaurant
   image_url: string
 
 User
-  name: string
+  username: string
   email: string
   password_digest: string
   admin: boolean(false)
@@ -29,6 +29,3 @@ Review
 List
   user_id: integer
   restaurant_id: integer
-
-Session
-  user_id: integer

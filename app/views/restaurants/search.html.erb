@@ -1,14 +1,30 @@
-<h1> Search Results </h1>
+<h3 style="text-align: center"> Search Results </h3>
 <ul>
-	<% @response.businesses.each do |r|%> 
-		<div class="search-element">
-			<span><%= image_tag r.image_url, :class => "search-thumbnail" %></span>
-			<div style="float: left"><ul class="plain">
-				<li class= "list-link"><%= r.name%></li>
-				<li><%= r.categories[0][0] %></li>
-				<li><%= r.location.neighborhoods[0] %></li>
-			</ul></div>
+	<!-- If the search result is not in chicago, the neighborhood field is empty -->
 
+	<% if @response.total == 0 %>
+		<h4 style = "text-align: center; padding-top: 100px">Sorry! No Results Found</h4>
+	<% end %> 
+	<% @response.businesses.each do |r|%> 
+		<% if r.location.city == "Chicago" %>
+			<% neighborhood = r.location.neighborhoods[0] rescue neighborhood = "Chicago" %>
+		<% else %>
+			<% neighborhood = r.location.city %>
+		<% end %>
+
+		<% image = r.image_url rescue image = "http://images.clipartpanda.com/spoon-clipart-black-and-white-knife-and-fork-clipart-white.svg" %>
+
+
+
+		<div class="search-element">
+
+			<span><%= image_tag image, :class => "search-thumbnail" %></span>
+
+			<ul class="plain">
+				<li class= "list-link"><%= r.name%></li>
+				<li><%= r.categories[0][0]%></li>
+				<li><%= neighborhood %></li>
+			</ul>
 
 			<!-- Convert the category into an id number, or create new category if necessary-->
 			<% c = Category.find_by(name: r.categories[0][0])%>
@@ -22,27 +38,22 @@
 			<% end %>
 
 			<!-- Convert the category into an id number, or create new category if necessary-->
-			<% n = Neighborhood.find_by(name: r.location.neighborhoods[0])%>
+			<% n = Neighborhood.find_by(name: neighborhood)%>
 			<% if n == nil %>
-				<%neighborhood = Neighborhood.new%>
-				<%neighborhood.name = r.location.neighborhoods[0]%>
-				<%neighborhood.save%>
-				<%n_id = neighborhood.id%>
-			<% else %>
-				<%n_id = n.id%>
+				<%n = Neighborhood.new%>
+				<%n.name = neighborhood%>
+				<%n.save%>
 			<% end %>
+				
+			<%n_id = n.id%>
 
-			<div style="float: left">
-			<%= button_to "Add to FoodEase", restaurants_path, 
-				params: {:name => r.name, :category_id => cat_id, :neighborhood_id => n_id,
-				         :rating => r.rating, :address => r.location.address, :image_url=> r.image_url},
-								 :class => "btn btn-primary btn-xs" %>
+			<div style="float: right">
+				<%= button_to "Add to FoodEase", restaurants_path, 
+					params: {:name => r.name, :category_id => cat_id, :neighborhood_id => n_id,
+				         :rating => r.rating, :address => r.location.address, 
+				         :image_url=> image},
+					:class => "btn btn-primary btn-xs" %>
 			</div>
-
-			<% content_tag :button, :type => :submit, :class => :positive do %>
-   			<%= image_tag r.image_url, :class => "search-thumbnail"%>
-   			Help
-			<% end %>
 
 		</div>
 	<% end %>

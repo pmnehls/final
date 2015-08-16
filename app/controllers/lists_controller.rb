@@ -16,6 +16,6 @@ class ListsController < ApplicationController
 	end
 
 	def show
-
+		@lists = List.where(:user_id => params["id"]).all
 	end
 end

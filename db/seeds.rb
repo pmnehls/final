@@ -59,7 +59,7 @@ end
 
 user_data.each do|user_hash|
 	user = User.new
-	user.name = user_hash['name']
+	user.username = user_hash['username']
 	user.email = user_hash['email']
 	user.password = user_hash['password']
 	user.save

@@ -3,8 +3,8 @@ Rails.application.routes.draw do
   root 'restaurants#index'
 
   get '/logout' => 'sessions#destroy'
-  get '/profile' => 'users#show'
-  get '/wall' => 'lists#show'
+  get '/account' => 'users#show'
+  get '/wall/:id' => 'lists#show'
   get '/initial' => 'sessions#create'
   post '/yelp' => 'restaurants#search'
 
