@@ -12,6 +12,7 @@ User
   email: string
   password_digest: string
   admin: boolean(false)
+  image_url: string
 
 Category
   name: string
@@ -25,6 +26,10 @@ Review
   description: text
   restaurant_id: integer
   user_id: integer
+
+Follow
+  follower: integer
+  followed: integer
 
 List
   user_id: integer

@@ -1,1 +1,1 @@
-[{"username":"pnehls","email":"patrick@example.com","password":"qwerty"},{"username":"foo","email":"foo@example.com","password":"bar"}]
+[{"username":"Pnehls","email":"patrick@example.com","password":"qwerty", "image_url":"ozzie.png"},{"username":"Cookie","email":"cookie@example.com","password":"cookie", "image_url":"http://cdn.grindtv.com/wp-content/uploads/2013/09/cookiemonster.jpeg"}]

@@ -17,5 +17,12 @@ class ListsController < ApplicationController
 
 	def show
 		@lists = List.where(:user_id => params["id"]).all
+		@user = User.find(params["id"])
+	end
+
+	def destroy
+		@list = List.find_by(:id => params["id"])
+		@list.delete
+		redirect_to "/restaurants"
 	end
 end

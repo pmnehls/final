@@ -1,14 +1,49 @@
 
-<ul>
-	<% @lists.each do |list| %>
-		<div class="list-element">
-			<span><%= image_tag list.restaurant.image_url, :class => "list-thumbnail" %></span>
-			<ul class="plain">
-				<li><%= link_to list.restaurant.name, "/restaurants/#{list.restaurant.id}", :class => "list-link" %></li></span>
-				<li><%= list.restaurant.category.name %></li>
-				<li><%= list.restaurant.neighborhood.name %></li>
-			</ul>
+<% if session[:user_id] == params[:id].to_i %>
+
+	<div class="page-header">
+  	<%= link_to "Edit Your Info", edit_user_path(@user.id), 
+  	class: 'btn btn-md btn-primary pull-right' %>
+  	<h2> Your Wall </h2>
+	</div>
+<% end %>
+
+<div class="wall-user-info">
+	<span><%= image_tag @user.image_url, :class => "wall-thumbnail" %></span>
+		<h1 style="text-align: center; color: navy; padding: 10px">
+			<%= @user.username %>
+		</h1>
+		<h5 style="text-align: center">
+			<% if @user.restaurants.count == 1 %>
+				1 Restaurant Posted to Wall
+			<% else %>
+				<%= @user.restaurants.count%> Restaurants Posted to Wall
+			<% end %>
+		</h5>
+
+		<% if session[:user_id] != params[:id].to_i %>
+			<div>
+					<%= link_to "Follow this User", "#",
+				 	type: "button", :class =>"btn btn-primary"%></td>
+			</div>
+		<% end %>
+</div>
+
+<% @lists.each do |list| %>
+	<div class="list-element">
+		<span><%= image_tag list.restaurant.image_url, :class => "list-thumbnail" %></span>
+		<ul class="plain">
+			<li><%= link_to list.restaurant.name, "/restaurants/#{list.restaurant.id}", :class => "list-link" %></li></span>
+			<li><%= list.restaurant.category.name %></li>
+			<li><%= list.restaurant.neighborhood.name %></li>
+		</ul>
+
+		<div style="float: right">
+			<% if session[:user_id] == params[:id].to_i %>
+				<%= link_to "Remove From Your Wall", "/lists/#{list.id}", :method => "delete",
+				 type: "button", :class =>"btn btn-primary"%></td>
+			<% end %>
 		</div>
-	<% end %>
-</ul>
+	</div>
+<% end %>
 

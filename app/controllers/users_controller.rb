@@ -4,11 +4,7 @@ class UsersController < ApplicationController
 	end
 
 	def show
-		if params[:id].to_i != session[:user_id]
-			redirect_to root_url, notice: "You can only look at your own account."
-		else
-			@user = User.find(params[:id])
-		end
+		@user = User.find(session[:user_id])
 	end
 
 	def new
@@ -19,6 +15,7 @@ class UsersController < ApplicationController
 		@user = User.new
 		@user.username = params[:username]
 		@user.email = params[:email]
+		@user.image_url = "https://acrobatusers.com/assets/images/template/author_generic.jpg"
 		@user.password = params[:password]
 		@user.password_confirmation = params[:password_confirmation]
 
@@ -35,12 +32,13 @@ class UsersController < ApplicationController
 	end
 
 	def update
+		@user = User.find(session[:user_id])
 		@user.username = params[:username]
-		@user.email = params[:password]
-		@user.password = params[:password]
+		@user.email = params[:email]
+		@user.image_url = params[:image_url]
 		if @user.save
 			flash[:notice] = "Account Updated!"
-			redirect_to user_url(@user.id)
+			redirect_to list_url(@user.id)
 		else
 			render 'edit'
 		end

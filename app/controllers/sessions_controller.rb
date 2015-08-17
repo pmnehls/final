@@ -5,10 +5,12 @@ class SessionsController < ApplicationController
 	end
 
 	def create
-		user = User.find_by_email(params["email"])
+		# user = User.find_by_email(params["email"])
+		user = User.where('lower(email) = ?', params["email"].downcase).first 
 
 		if !user
-			user = User.find_by_username(params["email"])
+			# user = User.find_by_username(params["email"])
+			user = User.where('lower(username) = ?', params["email"].downcase).first 
 		end 
 
 		if user

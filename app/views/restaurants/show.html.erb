@@ -20,7 +20,10 @@
 	</h4>
 
 	<% @restaurant.users.each do |user| %>
-		<%= link_to user.username, "/wall/#{user.id}", type: "button", :class =>"btn btn-info"%>
+		<div style="padding-bottom: 5px; margin: auto; width: 100px; text-align: center">
+			<%= link_to user.username, "/wall/#{user.id}", 
+			type: "button", :class =>"btn btn-info"%>
+		</div>
 	<% end %>
 
 

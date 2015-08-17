@@ -1,6 +1,11 @@
 class RestaurantsController < ApplicationController
 	def index
-		@restaurants = Restaurant.all
+		if params["keyword"].present?
+			k = params["keyword"].strip
+			@restaurants = Restaurant.where("name LIKE ?", "%#{k}%")
+		else
+			@restaurants = Restaurant.limit(500)
+		end
 	end
 
 	def show

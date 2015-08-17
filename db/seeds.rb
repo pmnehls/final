@@ -3,6 +3,7 @@ Category.delete_all
 Neighborhood.delete_all
 User.delete_all
 List.delete_all
+Follow.delete_all
 # Review.delete_all
 
 restaurant_data = JSON.parse(open('db/restaurants.json').read)
@@ -62,6 +63,7 @@ user_data.each do|user_hash|
 	user.username = user_hash['username']
 	user.email = user_hash['email']
 	user.password = user_hash['password']
+	user.image_url = user_hash['image_url']
 	user.save
 end
 

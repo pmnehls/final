@@ -58,6 +58,7 @@ ActiveRecord::Schema.define(version: 0) do
     t.boolean "admin",           default: false
     t.string  "password_digest"
     t.string  "username"
+    t.string  "image_url"
   end
 
 end
