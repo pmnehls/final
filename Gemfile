@@ -26,6 +26,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'ez'
 
+# gem for pagination
+gem 'kaminari'
+
 # gem for the Yelp API
 gem 'yelp', require: 'yelp'
 

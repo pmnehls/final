@@ -17,6 +17,23 @@ ActiveRecord::Schema.define(version: 0) do
     t.string "name"
   end
 
+  create_table "favorites", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "restaurant_id"
+    t.integer "number"
+  end
+
+  add_index "favorites", ["restaurant_id"], name: "index_favorites_on_restaurant_id"
+  add_index "favorites", ["user_id"], name: "index_favorites_on_user_id"
+
+  create_table "follows", force: :cascade do |t|
+    t.integer "follower_id"
+    t.integer "followed_id"
+  end
+
+  add_index "follows", ["followed_id"], name: "index_follows_on_followed_id"
+  add_index "follows", ["follower_id"], name: "index_follows_on_follower_id"
+
   create_table "lists", force: :cascade do |t|
     t.integer "user_id"
     t.integer "restaurant_id"
@@ -32,7 +49,6 @@ ActiveRecord::Schema.define(version: 0) do
   create_table "restaurants", force: :cascade do |t|
     t.string  "name"
     t.string  "address"
-    t.integer "price"
     t.float   "rating"
     t.string  "image_url"
     t.integer "category_id"
@@ -41,17 +57,6 @@ ActiveRecord::Schema.define(version: 0) do
 
   add_index "restaurants", ["category_id"], name: "index_restaurants_on_category_id"
   add_index "restaurants", ["neighborhood_id"], name: "index_restaurants_on_neighborhood_id"
-
-  create_table "reviews", force: :cascade do |t|
-    t.integer "rating"
-    t.text    "description"
-    t.integer "restaurant_id"
-    t.integer "user_id"
-    t.boolean "recommended",   default: false
-  end
-
-  add_index "reviews", ["restaurant_id"], name: "index_reviews_on_restaurant_id"
-  add_index "reviews", ["user_id"], name: "index_reviews_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.string  "email"

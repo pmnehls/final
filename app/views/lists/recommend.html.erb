@@ -1,0 +1,60 @@
+<%if session[:user_id] %>
+	<h2 style="text-align: center"> Recommended For You </h2>
+
+	<p style="text-align: center"> 
+		How does this work? FoodEase compares all the restaurants liked by users that like the same restaurants as you. The restaurants that are already on your wall are filtered out, helping you find new restaurants that people with similar taste already know about!
+	</p>
+
+	<% @user = User.find(session[:user_id]) %>
+	<% connected_users = List.where(:restaurant_id => @user.restaurants) %>
+
+	<% connected_users = connected_users.where.not(:user_id => session[:user_id]) %>
+	<% connected_users = connected_users.uniq.pluck(:user_id) %>
+	<% connected_restaurants = List.where(:user_id => connected_users) %>
+	<% connected_restaurants = connected_restaurants.where.not(:restaurant_id => @user.restaurants) %>
+
+	<% top = connected_restaurants.group('restaurant_id').order('count_restaurant_id DESC').limit(12).count('restaurant_id').to_a %>
+
+	<% top.in_groups_of(3, false) do |top_rows| %>
+		<div class="row">
+			<% for t in top_rows %>
+				<% top_res = Restaurant.find(t.first) %>
+				<div class="col-md-4" style:"margin: 4px">
+					<div class="square-list-element" style="text-align: center">
+						<div class="row">
+							<div class="col-md-3 col-md-12">
+								<span><%= image_tag top_res.image_url, :class => "square-list-thumbnail" %></span>
+							</div>
+
+							<div class="col-md-7 col-md-12">
+								<% if top_res.name.length > 15 %>
+									<ul class="wall2" style="text-align: center; width:100%">
+										<li><%= link_to top_res.name, "/restaurants/#{top_res.id}", 
+											:class => "list-link" %>
+										</li>
+										<li><%= top_res.category.name %></li>
+										<li><%= top_res.neighborhood.name %></li>
+								<% else %>
+									<ul class="wall" style="text-align: center; width:100%">
+										<li><%= link_to top_res.name, "/restaurants/#{top_res.id}", 
+											:class => "list-link" %>
+										</li>
+										<li><%= top_res.category.name %></li>
+										<li><%= top_res.neighborhood.name %></li>
+									</ul>
+								<% end %>
+							</div>
+
+							<div class="col-md-1 col-md-12">
+								<div style="margin-top:40px">
+									<%= button_to "Add", lists_path, params: {:restaurant_id => 
+										top_res.id}, :class =>"btn btn-primary btn-xs", :style=>"float:left" %> 
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			<% end %>
+		</div>
+	<% end %>
+<% end %>

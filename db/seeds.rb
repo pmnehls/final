@@ -4,12 +4,16 @@ Neighborhood.delete_all
 User.delete_all
 List.delete_all
 Follow.delete_all
-# Review.delete_all
+Favorite.delete_all
 
 restaurant_data = JSON.parse(open('db/restaurants.json').read)
 category_data = JSON.parse(open('db/categories.json').read)
 neighborhood_data = JSON.parse(open('db/neighborhoods.json').read)
 user_data = JSON.parse(open('db/users.json').read)
+list_data = JSON.parse(open('db/lists.json').read)
+follow_data = JSON.parse(open('db/follows.json').read)
+favorite_data = JSON.parse(open('db/favorites.json').read)
+
 
 restaurant_data.each do |restaurant_hash|
 	restaurant = Restaurant.new
@@ -26,15 +30,16 @@ restaurant_data.each do |restaurant_hash|
 
   # initialize neighborhoods
   neighborhood = Neighborhood.find_by(name: restaurant_hash['neighborhood'])
+  
   if neighborhood == nil
   	neighborhood = Neighborhood.new
   	neighborhood.name = restaurant_hash['neighborhood']
   	neighborhood.save
   end
+
   restaurant.neighborhood_id = neighborhood.id
 
 	restaurant.address = restaurant_hash['address']
-	# restaurant.price = restaurant_hash['price']
 	restaurant.rating = restaurant_hash['rating']
 	restaurant.image_url = restaurant_hash['image_url']
 	restaurant.save
@@ -64,7 +69,45 @@ user_data.each do|user_hash|
 	user.email = user_hash['email']
 	user.password = user_hash['password']
 	user.image_url = user_hash['image_url']
+	if user_hash['admin']
+		user.admin = true
+	end
 	user.save
+end
+
+list_data.each do |list_hash|
+	list = List.new
+	user = User.find_by(username: list_hash['username'])
+	if user
+		list.user_id = user.id
+	end
+	res = Restaurant.find_by(name: list_hash['restaurant'])
+	if res
+		list.restaurant_id = res.id
+	end
+	list.save
+end
+
+follow_data.each do |follow_hash|
+	follow = Follow.new
+	follow.follower_id = User.find_by(username: follow_hash['follower']).id
+	follow.followed_id = User.find_by(username: follow_hash['followed']).id
+	follow.save
+end
+
+favorite_data.each do |favorite_hash|
+	favorite = Favorite.new
+	user = User.find_by(username: favorite_hash['username'])
+	if user
+		favorite.user_id = user.id
+	end
+	res = Restaurant.find_by(name: favorite_hash['restaurant'])
+	if res
+		favorite.restaurant_id = res.id
+	end
+
+	favorite.number = favorite_hash['number']
+	favorite.save
 end
 
 puts "Seeded successfully!"

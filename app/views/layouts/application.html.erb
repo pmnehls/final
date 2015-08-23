@@ -12,7 +12,8 @@
 
 <body>
 
-  <nav class="navbar navbar-default">
+  <nav class="navbar navbar-default" 
+    style="background-color:#009900; color: white">
     <div class="container">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -21,16 +22,21 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="/">FoodEase</a>
+        <a class="navbar-brand" style="color: white; font-weight:bold" href="/">
+          FoodEase
+        </a>
       </div>
 
   		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     		<ul class="nav navbar-nav">
-      		<li><a href="/restaurants">Restaurants</a></li>
+      		<li><a style="color: white" href="/restaurants">Restaurants</a></li>
       		<% if session[:user_id] %>
-            <li><%= link_to "Your Wall", "wall/#{session[:user_id]}" %></li>
+            <li>
+              <%= link_to "Your Wall", "/wall/#{session[:user_id]}", 
+                {:style=>'color:white'}%>
+            </li>
           <% end %>
-      		<li><a href="#">Recommend-o-matic</a></li>
+      		<li><a href="/recommendations" style="color: white">Recommend-o-matic</a></li>
 
 		      <form class="navbar-form navbar-left" role="search", action = "/restaurants">
     		    <div class="form-group">
@@ -41,7 +47,10 @@
       		</form>
 
           <% if session[:user_id] %>
-          <li><p class="navbar-text">Hello, <%= User.find(session[:user_id]).username %></p></li>
+            <li class="nav navbar-nav">
+              <%= link_to "Hello, #{User.find(session[:user_id]).username}!", 
+                "/users/#{session[:user_id]}",{:style=>"color:white"}%>
+            </li>
 
           <% end %>
     		</ul>
@@ -49,10 +58,10 @@
 
     		<ul class="nav navbar-nav navbar-right">
           <% if session[:user_id] %>
-            <li><a href="/logout">Sign Out</a></li>
+            <li><a href="/logout" style="color: white">Sign Out</a></li>
           <% else %>
-      		  <li><a href="/users/new">Sign Up</a></li>
-      		  <li><a href="/sessions/new">Login</a></li>
+      		  <li><a href="/users/new" style="color: white">Sign Up</a></li>
+      		  <li><a href="/sessions/new" style="color: white">Login</a></li>
           <% end %>
 
     		</ul>
@@ -65,6 +74,10 @@
     <% if notice.present? %>
       <div class="alert alert-success">
         <%= notice %>
+      </div>
+    <% elsif flash[:error].present? %>
+      <div class="alert alert-danger">
+        <%= flash[:error] %>
       </div>
     <% end %>
 

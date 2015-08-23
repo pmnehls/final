@@ -11,6 +11,8 @@ class ListsController < ApplicationController
 		r = Restaurant.find(params["restaurant_id"])
 		if (list.save)
 			flash[:notice] = "#{r.name} added to your wall."
+		else
+			flash[:error] ="#{r.name} was already on your wall."
 		end
 		redirect_to root_url
 	end
@@ -20,9 +22,13 @@ class ListsController < ApplicationController
 		@user = User.find(params["id"])
 	end
 
+	def recommend
+		
+	end
+
 	def destroy
 		@list = List.find_by(:id => params["id"])
 		@list.delete
-		redirect_to "/restaurants"
+		redirect_to "/lists/#{session[:user_id]}"
 	end
 end

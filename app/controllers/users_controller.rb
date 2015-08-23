@@ -1,10 +1,20 @@
 class UsersController < ApplicationController
 	def index
+		user = User.find_by(id: session[:user_id])
+		if !user.admin
+			redirect_to root_url
+		end
 		@users = User.all
 	end
 
 	def show
-		@user = User.find(session[:user_id])
+		if params[:id].to_i != session[:user_id]
+			flash[:error] = "You don't have access to that page."
+      redirect_to root_url
+    else
+      @user = User.find(params[:id])
+    end
+		# @user = User.find(session[:user_id])
 	end
 
 	def new
@@ -46,5 +56,18 @@ class UsersController < ApplicationController
 
 	def destroy
 
+	end
+
+	def follow
+		f = Follow.new
+		f.followed_id = params["followed_id"]
+		f.follower_id = session[:user_id]
+		u = User.find(params["followed_id"])
+		if (f.save)
+			flash[:notice] = "You are now following #{u.username}!"
+		else
+			flash[:error] = "You were already following #{u.username}"
+		end
+		redirect_to root_url
 	end
 end

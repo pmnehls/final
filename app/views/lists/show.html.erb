@@ -2,18 +2,19 @@
 <% if session[:user_id] == params[:id].to_i %>
 
 	<div class="page-header">
-  	<%= link_to "Edit Your Info", edit_user_path(@user.id), 
+  	<%= link_to "Edit Your Profile Info", edit_user_path(@user.id), 
   	class: 'btn btn-md btn-primary pull-right' %>
   	<h2> Your Wall </h2>
 	</div>
 <% end %>
+
 
 <div class="wall-user-info">
 	<span><%= image_tag @user.image_url, :class => "wall-thumbnail" %></span>
 		<h1 style="text-align: center; color: navy; padding: 10px">
 			<%= @user.username %>
 		</h1>
-		<h5 style="text-align: center">
+		<h5 style="text-align: center; padding-bottom: 10px">
 			<% if @user.restaurants.count == 1 %>
 				1 Restaurant Posted to Wall
 			<% else %>
@@ -21,29 +22,188 @@
 			<% end %>
 		</h5>
 
-		<% if session[:user_id] != params[:id].to_i %>
-			<div>
-					<%= link_to "Follow this User", "#",
-				 	type: "button", :class =>"btn btn-primary"%></td>
+		<% if (session[:user_id]) && (session[:user_id] != params[:id].to_i)%>
+			<div style ="text-align: center">
+				 	<%= button_to "Follow User", "/follow", 
+				 	params: {:followed_id => params[:id]}, 
+				 	:class => "btn btn-primary btn-sm" %>
 			</div>
 		<% end %>
 </div>
 
-<% @lists.each do |list| %>
-	<div class="list-element">
-		<span><%= image_tag list.restaurant.image_url, :class => "list-thumbnail" %></span>
-		<ul class="plain">
-			<li><%= link_to list.restaurant.name, "/restaurants/#{list.restaurant.id}", :class => "list-link" %></li></span>
-			<li><%= list.restaurant.category.name %></li>
-			<li><%= list.restaurant.neighborhood.name %></li>
-		</ul>
 
-		<div style="float: right">
-			<% if session[:user_id] == params[:id].to_i %>
-				<%= link_to "Remove From Your Wall", "/lists/#{list.id}", :method => "delete",
-				 type: "button", :class =>"btn btn-primary"%></td>
+<% favs = @user.favoriterestaurants %>
+<% favs.order('number') %>
+
+<div class="container">
+	<% if favs %>
+		<div class="row">
+			<%favs.each do |fav|%>
+				<div class="col-md-4">
+					<div class="fav-element" style="text-align: center">
+						<%= image_tag fav.restaurant.image_url, :class => "fav-thumbnail" %>
+						<h3 style="text-align: center; margin-bottom 5px; text-decoration: underline"> 
+							#<%= fav.number%> Restaurant
+						</h3>
+						<ul class="fav">
+							<li>
+								<%= link_to fav.restaurant.name, "/restaurants/#{fav.restaurant.id}", :class => "list-link" %>
+							</li>
+							<li><%= fav.restaurant.category.name %></li>
+							<li><%= fav.restaurant.neighborhood.name %></li>
+						</ul>
+					</div>
+				</div>
 			<% end %>
 		</div>
+  <% end %>
+
+	<!-- followed and follower boxes -->
+	<div class="row">
+	  <div class="col-md-4 col-md-offset-1">
+			<div class="followed-users-box">
+				<% @follows = Follow.where(:follower_id => params[:id]).limit(500) %>
+				<h4 style="text-align: center">Following</h4>
+				<% if @follows.count == 0 %>
+					<h5 style="text-align: center">No One Yet!</h5>
+				<% else %>
+					<div style=" margin: auto; text-align: center">
+						<% @follows.each do |f| %>
+
+							<%= link_to f.followed.username, "/wall/#{f.followed.id}", 
+							:class =>"btn btn-info", :style=>"margin: 2px; margin-bottom:4px; display: inline-block"%>
+						<% end %>
+					</div>
+				<% end %>
+			</div>
+		</div>
+
+		<div class="col-md-2" style="text-align:center; padding-top:15px">
+			<% if (session[:user_id]) && (session[:user_id] == params[:id].to_i)%>
+		  	<%= link_to "Set Your Top 3", "/favorites/new", 
+  			class: 'btn btn-md btn-primary' %>
+  		<% end %>
+		</div>
+
+		<div class="col-md-4">
+			<div class="followed-users-box">
+				<% @follows = Follow.where(:followed_id => params[:id]).limit(500) %>
+				<h4 style="text-align: center">Followed By</h4>
+				<% if @follows.count == 0 %>
+					<h5 style="text-align: center">No One Yet!</h5>
+				<% else %>
+					<div style="margin: auto; text-align: center">
+						<% @follows.each do |f| %>
+								<%= link_to f.follower.username, "/wall/#{f.follower.id}", 
+								:class =>"btn btn-info", :style=>"margin: 2px; margin-bottom: 4px; display: inline-block"%>
+						<% end %>
+					</div>
+				<% end %>
+			</div>
+		</div>
 	</div>
-<% end %>
+
+
+	<!-- Display for all of user's restaurants -->
+	<h3 style="text-align: center"> 
+		All Restaurants on 
+		<% if params[:id].to_i == session[:user_id] %>
+			Your Wall
+		<% else %>
+			<%= @user.username %>'s Wall
+		<% end %>
+	</h3>
+	<% @lists.in_groups_of(2, false) do |list_pairs| %>
+		<div class="row">
+			<% for list in list_pairs %>
+				<div class="col-md-6">
+					<div class="square-list-element" style="text-align: center">
+						<div class="row">
+							<div class="col-md-3 col-md-12">
+								<span><%= image_tag list.restaurant.image_url, :class => "square-list-thumbnail" %></span>
+							</div>
+
+							<div class="col-md-7 col-md-12">
+								<ul class="wall" style="text-align: center">
+									<li><%= link_to list.restaurant.name, "/restaurants/#{list.restaurant.id}", 
+										:class => "list-link" %>
+									</li>
+									<li><%= list.restaurant.category.name %></li>
+									<li><%= list.restaurant.neighborhood.name %></li>
+								</ul>
+							</div>
+
+							<div class="col-md-1 col-md-12">
+								<div style="margin-top:40px">
+									<% if session[:user_id] == params[:id].to_i %>
+										<%= link_to "Remove", "/lists/#{list.id}", :method => "delete",
+								 		type: "button", :class =>"btn btn-primary btn-xs", :style=>"float:left"%> 
+									<% end %>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			<% end %>
+		</div>
+	<% end %>
+
+	<%if params["id"].to_i == session[:user_id] %>
+		<h2 style="text-align: center"> Recommended For You </h2>
+
+		<% connected_users = List.where(:restaurant_id => @user.restaurants) %>
+
+		<% connected_users = connected_users.where.not(:user_id => session[:user_id]) %>
+		<% connected_users = connected_users.uniq.pluck(:user_id) %>
+		<% connected_restaurants = List.where(:user_id => connected_users) %>
+		<% connected_restaurants = connected_restaurants.where.not(:restaurant_id => @user.restaurants) %>
+
+		<% top = connected_restaurants.group('restaurant_id').order('count_restaurant_id DESC').limit(9).count('restaurant_id').to_a %>
+
+		<% top.in_groups_of(3, false) do |top_rows| %>
+			<div class="row">
+				<% for t in top_rows %>
+					<% top_res = Restaurant.find(t.first) %>
+					<div class="col-md-4" style:"margin: 4px">
+						<div class="square-list-element" style="text-align: center">
+							<div class="row">
+								<div class="col-md-3 col-md-12">
+									<span><%= image_tag top_res.image_url, :class => "square-list-thumbnail" %></span>
+								</div>
+
+								<div class="col-md-7 col-md-12">
+									<% if top_res.name.length > 15 %>
+										<ul class="wall2" style="text-align: center; width:100%">
+											<li><%= link_to top_res.name, "/restaurants/#{top_res.id}", 
+												:class => "list-link" %>
+											</li>
+											<li><%= top_res.category.name %></li>
+											<li><%= top_res.neighborhood.name %></li>
+									<% else %>
+										<ul class="wall" style="text-align: center; width:100%">
+											<li><%= link_to top_res.name, "/restaurants/#{top_res.id}", 
+												:class => "list-link" %>
+											</li>
+											<li><%= top_res.category.name %></li>
+											<li><%= top_res.neighborhood.name %></li>
+										</ul>
+									<% end %>
+								</div>
+
+								<div class="col-md-1 col-md-12">
+									<div style="margin-top:40px">
+										<% if session[:user_id] == params[:id].to_i %>
+											<%= button_to "Add", lists_path, params: {:restaurant_id => 
+												top_res.id}, :class =>"btn btn-primary btn-xs", :style=>"float:left" %> 
+										<% end %>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				<% end %>
+			</div>
+		<% end %>
+	<% end %>
+</div>
 

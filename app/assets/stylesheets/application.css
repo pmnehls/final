@@ -21,16 +21,15 @@ p {
   font-size: 18px;
 }
 
-nav h1 {
-  background: #009;
-  color: white;
+/*nav h1 {
+  background: #009900;
   padding: 12px;
 }
 
 nav a, nav a:visited {
  text-decoration: none;
  color: white;
-}
+}*/
 
 h2 {
  color: black;
@@ -47,7 +46,7 @@ h2 {
 }
 
 #restaurant-header {
- color: green;
+ color: #009900;
  /*background-color: red;*/
  font-weight: bold;
  font-size: 24px;
@@ -61,7 +60,7 @@ h2 {
 }
 
 
-.wall-user-info{
+.wall-user-info{ 
  border: solid 2px black;
  border-top-left-radius: 85px;
  border-bottom-left-radius: 85px;
@@ -74,14 +73,46 @@ h2 {
  overflow: hidden;
 }
 
+.followed-users-box{
+ border: solid 2px black;
+ border-radius: 15px;
+ /*margin: auto;*/
+ margin-bottom: 10px;
+}
+
 .list-element {
  border: solid 2px black;
- /*border-radius: 10px;*/
- border-top-left-radius: 60px;
- border-bottom-left-radius: 60px;
- border-top-right-radius: 10px;
- border-bottom-right-radius: 10px;
- padding: 10px;
+ border-top-left-radius: 55px;
+ border-bottom-left-radius: 55px;
+ border-top-right-radius: 15px;
+ border-bottom-right-radius: 15px;
+ padding: 5px;
+ width: 100%;
+ margin: auto;
+ margin-bottom: 5px;
+ overflow: hidden;
+}
+
+.square-list-element {
+ border: solid 2px black;
+ border-top-left-radius: 20px;
+ border-bottom-left-radius: 20px;
+ border-top-right-radius: 20px;
+ border-bottom-right-radius: 20px;
+ padding: 3px;
+ width: 100%;
+ margin: auto;
+ margin-bottom: 5px;
+ overflow: hidden;
+}
+
+.fav-element {
+ border: solid 2px black;
+ border-top-left-radius: 55px;
+ border-bottom-left-radius: 15px;
+ border-top-right-radius: 55px;
+ border-bottom-right-radius: 15px;
+ padding: 5px;
  width: 100%;
  margin: auto;
  margin-bottom: 10px;
@@ -90,15 +121,14 @@ h2 {
 
 .search-element {
  border: solid 2px black;
- /*border-radius: 10px;*/
  border-top-left-radius: 50px;
  border-bottom-left-radius: 50px;
- border-top-right-radius: 5px;
- border-bottom-right-radius: 5px;
+ border-top-right-radius: 10px;
+ border-bottom-right-radius: 10px;
  padding: 5px;
  width: 100%;
  margin: auto;
- margin-bottom: 10px;
+ margin-bottom: 5px;
  overflow: hidden;
 }
 
@@ -113,7 +143,21 @@ h2 {
  width: 100px;
  height: 100px;
  border-radius: 50px;
- /*margin-right: 20px;*/
+ float: left;
+}
+
+.square-list-thumbnail {
+ width: 100px;
+ height: 100px;
+ border-radius: 15px;
+ float: left;
+}
+
+.fav-thumbnail {
+ height: 200px;
+ width: 100%;
+ border-top-left-radius: 50px;
+ border-top-right-radius: 50px;
  float: left;
 }
 
@@ -148,10 +192,46 @@ p {
 
 ul.plain {
  list-style-type: none;
+ padding: 0;
  text-align: center;
  margin: auto;
- width: 80%;
+ width: 100%;
  margin-top: 15px;
+ display: inline-block;
+ /*float: left;*/
+ /*margin-right: 20px;*/
+}
+
+ul.fav {
+ list-style-type: none;
+ padding: 0;
+ text-align: center;
+ margin: auto;
+ width: 100%;
+ display: inline-block;
+ /*float: left;*/
+ /*margin-right: 20px;*/
+}
+
+ul.wall {
+ list-style-type: none;
+ padding: 0;
+ text-align: center;
+ margin: auto;
+ width: 100%;
+ margin-top: 15px;
+ display: inline-block;
+ /*float: left;*/
+ /*margin-right: 20px;*/
+}
+
+ul.wall2 {
+ list-style-type: none;
+ padding: 0;
+ text-align: center;
+ margin: auto;
+ width: 100%;
+ margin-top: 3px;
  display: inline-block;
  /*float: left;*/
  /*margin-right: 20px;*/
@@ -180,5 +260,49 @@ ul.restaurant-users-list {
  padding: 2px;
  border-radius: 2px;
  display: inline-block;
+}
+
+.btn-info {
+ margin: 5px;
+}
+
+.pagination a, .pagination span.current, .pagination span.gap {
+	float: left;
+	padding: 0 14px;
+	line-height: 38px;
+	text-decoration: none;
+	background-color: white;
+	border: 1px solid #DDD;
+	border-left-width: 0;
+}
+
+.pagination {
+	color: black;
+	border-left: 1px solid #ddd;
+	.first{
+		padding : 0;
+		float: none;
+		border: none;
+	}
+	.prev {
+		padding : 0;
+		float: none;
+		border: none;
+	}
+	.page{
+		padding : 0;
+		float: none;
+		border: none;
+	}
+	.next{
+		padding : 0;
+		float: none;
+		border: none;
+	}
+	.last{
+		padding : 0;
+		float: none;
+		border: none;
+	}
 }
 

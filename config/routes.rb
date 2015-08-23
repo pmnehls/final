@@ -7,6 +7,12 @@ Rails.application.routes.draw do
   get '/wall/:id' => 'lists#show'
   get '/initial' => 'sessions#create'
   post '/yelp' => 'restaurants#search'
+  post '/follow' => 'users#follow'
+  get '/recommendations' => 'lists#recommend'
+
+  get '/favorites/new' => 'favorites#new'
+  post 'favorites' => 'favorites#create'
+  patch 'favorites/:id' => 'favorites#edit'
 
   resources :restaurants
   resources :users

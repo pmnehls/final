@@ -3,7 +3,6 @@ Restaurant
   category_id: integer
   neighborhood_id: integer
   address: string
-  price: integer
   rating: float
   image_url: string
 
@@ -11,7 +10,7 @@ User
   username: string
   email: string
   password_digest: string
-  admin: boolean(false)
+  admin: boolean (false)
   image_url: string
 
 Category
@@ -20,16 +19,14 @@ Category
 Neighborhood
   name: string
 
-Review
-  rating: integer
-  recommended: boolean
-  description: text
-  restaurant_id: integer
-  user_id: integer
-
 Follow
-  follower: integer
-  followed: integer
+  follower_id: integer
+  followed_id: integer
+
+Favorite
+  user_id: integer
+  restaurant_id: integer
+  number: integer
 
 List
   user_id: integer

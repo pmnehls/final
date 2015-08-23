@@ -2,9 +2,9 @@ class RestaurantsController < ApplicationController
 	def index
 		if params["keyword"].present?
 			k = params["keyword"].strip
-			@restaurants = Restaurant.where("name LIKE ?", "%#{k}%")
+			@restaurants = Restaurant.where("name LIKE ?", "%#{k}%").limit(10000).page(params[:page]).per(20)
 		else
-			@restaurants = Restaurant.limit(500)
+			@restaurants = Restaurant.limit(10000).page(params[:page]).per(20)
 		end
 	end
 
@@ -34,26 +34,42 @@ class RestaurantsController < ApplicationController
 	end
 
 	def create
-		@restaurant = Restaurant.new
-		@restaurant.name = params["name"]
-		@restaurant.category_id = params["category_id"]
-		@restaurant.neighborhood_id = params["neighborhood_id"]
-		@restaurant.address = params["address"]
-		@restaurant.price = params["price"]
-		@restaurant.rating = params["rating"]
+		restaurant = Restaurant.new
+		restaurant.name = params["name"]
+		restaurant.category_id = params["category_id"]
+		restaurant.neighborhood_id = params["neighborhood_id"]
+		restaurant.address = params["address"]
+		restaurant.rating = params["rating"]
 
 		# editing string to link to a higher res photo from yelp
 		# original API response is 100x100
+		img = params["image_url"].chomp('ms.jpg') << "l.jpg"
+		restaurant.image_url = img
 
-		img = params["image_url"].chomp('ms.jpg') << "o.jpg"
-		@restaurant.image_url = img
+		if restaurant.save
+			flash[:notice] = "#{restaurant.name} added to FoodEase"
 
-		if @restaurant.save
-			flash[:notice] = "#{@restaurant.name} added to FoodEase"
-			redirect_to root_url
+			# this parameter diferentiates the button to both add to foodease
+			# and to add to your wall
+			if params[:list_user_id]
+				list = List.new
+				list.restaurant_id = restaurant.id
+				list.user_id = session[:user_id]
+
+				if list.save
+					flash[:notice] = "#{restaurant.name} added to your wall."
+				else
+					flash[:error] ="#{restaurant.id} was already on your wall."
+				end
+			end
 		else
-			render 'new'
+			flash[:error] = "#{restaurant.name} is already on Foodease"
 		end
+
+
+
+		redirect_to root_url
+
 	end
 
 	def destroy

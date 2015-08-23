@@ -5,55 +5,68 @@
 	<h4 style = "text-align: center; padding-top: 100px">Sorry! No Results Found</h4>
 <% end %> 
 
-<% @response.businesses.each do |r|%> 
+<div class="container">
+	<% @response.businesses.each do |r|%> 
+		
+		<!-- assigns neighborhood or city if no neighborhood present -->
+		<% neighborhood = r.location.neighborhoods[0] rescue r.location.city %>
 
-	<% if r.location.city == "Chicago" %>
-		<% neighborhood = r.location.neighborhoods[0] rescue neighborhood = "Chicago" %>
-	<% else %>
-		<% neighborhood = r.location.city %>
-	<% end %>
 
-	<!-- provide default image if none provided in Yelp API response -->
-	<% image = r.image_url rescue image = "http://images.clipartpanda.com/spoon-clipart-black-and-white-knife-and-fork-clipart-white.svg" %>
+		<!-- provide default image if none provided in Yelp API response -->
+		<% image = r.image_url rescue image = "http://images.clipartpanda.com/spoon-clipart-black-and-white-knife-and-fork-clipart-white.svg" %>
 
-	<div class="search-element">
+		<div class="row">
+			<div class="search-element">
 
-		<span><%= image_tag image, :class => "search-thumbnail" %></span>
+					<span><%= image_tag image, :class => "search-thumbnail" %></span>
 
-		<ul class="plain">
-			<li class= "list-link"><%= r.name%></li>
-			<li><%= r.categories[0][0]%></li>
-			<li><%= neighborhood %></li>
-		</ul>
+				<div class="col-md-6 col-md-offset-2">
+					<ul class="plain">
+						<li class= "list-link"><%= r.name%></li>
+						<li><%= r.categories[0][0]%></li>
+						<li><%= neighborhood %></li>
+					</ul>
+				</div>
 
-		<!-- Convert the category into an id number, or create new category if necessary-->
-		<% c = Category.find_by(name: r.categories[0][0])%>
-		<% if c == nil %>
-			<%category = Category.new%>
-			<%category.name = r.categories[0][0]%>
-			<%category.save%>
-			<%cat_id = category.id%>
-		<% else %>
-			<%cat_id = c.id%>
-		<% end %>
+				<!-- Convert the category into an id number, or create new category if necessary-->
+				<% c = Category.find_by(name: r.categories[0][0])%>
+				<% if c == nil %>
+					<%category = Category.new%>
+					<%category.name = r.categories[0][0]%>
+					<%category.save%>
+					<%cat_id = category.id%>
+				<% else %>
+					<%cat_id = c.id%>
+				<% end %>
 
-		<!-- Convert the category into an id number, or create new category if necessary-->
-		<% n = Neighborhood.find_by(name: neighborhood)%>
-		<% if n == nil %>
-			<%n = Neighborhood.new%>
-			<%n.name = neighborhood%>
-			<%n.save%>
-		<% end %>
-			
-		<%n_id = n.id%>
+				<!-- Convert the category into an id number, or create new category if necessary-->
+				<% n = Neighborhood.find_by(name: neighborhood)%>
+				<% if n == nil %>
+					<%n = Neighborhood.new%>
+					<%n.name = neighborhood%>
+					<%n.save%>
+				<% end %>
+					
+				<%n_id = n.id%>
 
-		<div style="float: right">
-			<%= button_to "Add to FoodEase", restaurants_path, 
-				params: {:name => r.name, :category_id => cat_id, :neighborhood_id => n_id,
-			         :rating => r.rating, :address => r.location.address, 
-			         :image_url=> image},
-				:class => "btn btn-primary btn-xs" %>
+				<div class="col-md-2">
+					<div style="margin: auto; margin-top: 15px; ">
+						<%= button_to "Add to FoodEase", restaurants_path, 
+							params: {:name => r.name, :category_id => cat_id, :neighborhood_id => n_id,
+						         :rating => r.rating, :address => r.location.address, 
+						         :image_url=> image},
+							:class => "btn btn-primary btn-xs" %>
+					</div>
+
+					<div style="margin: auto; margin-top: 15px">
+						<%= button_to "Add to Your Wall and FoodEase", restaurants_path, 
+							params: {:name => r.name, :category_id => cat_id, :neighborhood_id => n_id,
+						         :rating => r.rating, :address => r.location.address, 
+						         :image_url=> image, :list_user_id => session[:user_id]},
+							:class => "btn btn-primary btn-xs" %>
+					</div>
+				</div>
+			</div>
 		</div>
-
-	</div>
-<% end %>
+	<% end %>
+</div>
