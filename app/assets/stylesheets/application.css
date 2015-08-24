@@ -165,7 +165,6 @@ h2 {
  width: 90px;
  height: 90px;
  border-radius: 45px;
- /*margin-right: 20px;*/
  float: left;
 }
 
@@ -182,7 +181,7 @@ h2 {
  border-radius: 50px;
  border: 2px solid black;
  float: right;
- margin-right: 5px;
+ margin: 5px;
 
 }
 
