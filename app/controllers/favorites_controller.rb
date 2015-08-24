@@ -2,9 +2,9 @@ class FavoritesController < ApplicationController
 
   def new
     @lists = List.where(:user_id => session[:user_id])
-    @prev_first = Favorite.where(:user_id => session[:user_id], :number => 1)
-    @prev_second = Favorite.where(:user_id => session[:user_id], :number => 2)
-    @prev_third = Favorite.where(:user_id => session[:user_id], :number => 1)
+    @prev_first = Favorite.where(:user_id => session[:user_id], :number => 1).pluck(:restaurant_id)
+    @prev_second = Favorite.where(:user_id => session[:user_id], :number => 2).pluck(:restaurant_id)
+    @prev_third = Favorite.where(:user_id => session[:user_id], :number => 3).pluck(:restaurant_id)
   end
 
   def create

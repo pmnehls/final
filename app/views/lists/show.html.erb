@@ -124,13 +124,22 @@
 							</div>
 
 							<div class="col-md-7 col-md-12">
-								<ul class="wall" style="text-align: center">
-									<li><%= link_to list.restaurant.name, "/restaurants/#{list.restaurant.id}", 
-										:class => "list-link" %>
-									</li>
-									<li><%= list.restaurant.category.name %></li>
-									<li><%= list.restaurant.neighborhood.name %></li>
-								</ul>
+								<% if list.restaurant.name.length > 30 %>
+									<ul class="wall2" style="text-align: center; width:100%">
+										<li><%= link_to list.restaurant.name, "/restaurants/#{list.restaurant.id}", 
+											:class => "list-link" %>
+										</li>
+										<li><%= list.restaurant.category.name %></li>
+										<li><%= list.restaurant.neighborhood.name %></li>
+								<% else %>
+									<ul class="wall" style="text-align: center">
+										<li><%= link_to list.restaurant.name, "/restaurants/#{list.restaurant.id}", 
+											:class => "list-link" %>
+										</li>
+										<li><%= list.restaurant.category.name %></li>
+										<li><%= list.restaurant.neighborhood.name %></li>
+									</ul>
+								<% end %>
 							</div>
 
 							<div class="col-md-1 col-md-12">

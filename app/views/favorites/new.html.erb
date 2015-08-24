@@ -1,37 +1,55 @@
 <%= form_tag "/favorites" do %>
 	<div class="container">
-		<div class="row">
-			<div class="col-md-4">
+		<div class="row" style="margin-top: 50px">
+			<div class="col-md-4" style="text-align: center">
 				<label>#1 Restaurant</label>
 				<select name="first">
 					<% 	@lists.each do |list| %> 
-						<option value="<%= list.restaurant_id %>"><%= list.restaurant.name %></option>
+						<% if list.restaurant_id == @prev_first[0] %>
+							<option selected="selected" value="<%=list.restaurant_id%>">
+								<%= list.restaurant.name %>
+							</option>
+						<% else %> 
+							<option value="<%= list.restaurant_id %>"><%= list.restaurant.name %></option>
+						<% end %>
 					<% end %>
 				</select>
 			</div>
 
-			<div class="col-md-4">
+			<div class="col-md-4" style="text-align: center">
 				<label>#2 Restaurant</label>
 				<select name="second">
-					<% 	@lists.each do |list| %> 
-						<option value="<%= list.restaurant_id %>"><%= list.restaurant.name %></option>
+					<% 	@lists.each do |list| %>
+						<% if list.restaurant_id == @prev_second[0] %>
+							<option selected="selected" value="<%=list.restaurant_id%>">
+								<%= list.restaurant.name %>
+							</option>
+						<% else %> 
+							<option value="<%= list.restaurant_id %>"><%= list.restaurant.name %></option>
+						<% end %>
 					<% end %>
 				</select>
 			</div>
 
-			<div class="col-md-4">
+			<div class="col-md-4" style="text-align: center">
 				<label>#3 Restaurant</label>
 				<select name="third">
 					<% 	@lists.each do |list| %> 
-						<option value="<%= list.restaurant_id %>"><%= list.restaurant.name %></option>
+						<% if list.restaurant_id == @prev_third[0] %>
+							<option selected="selected" value="<%=list.restaurant_id%>">
+								<%= list.restaurant.name %>
+							</option>
+						<% else %> 
+							<option value="<%= list.restaurant_id %>"><%= list.restaurant.name %></option>
+						<% end %>
 					<% end %>
 				</select>
 			</div>
 		</div>
 
 		<div class="row">
-			<div class="col-md-4 col-md-offset-4">
-				<input type="submit" value="Set Your Top Three" style="margin: auto">
+			<div class="col-md-12" style="text-align: center">
+				<input type="submit" value="Set Your Top Three" style="margin: auto; margin-top: 100px">
 			</div>
 		</div>
 	</div>
