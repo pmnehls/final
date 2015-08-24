@@ -1,8 +1,8 @@
 class RestaurantsController < ApplicationController
 	def index
 		if params["keyword"].present?
-			k = params["keyword"].strip
-			@restaurants = Restaurant.where("name LIKE ?", "%#{k}%").limit(10000).page(params[:page]).per(20)
+			k = params["keyword"].strip.downcase
+			@restaurants = Restaurant.where("lower(name) LIKE ?", "%#{k}%").limit(10000).page(params[:page]).per(20)
 		else
 			@restaurants = Restaurant.limit(10000).page(params[:page]).per(20)
 		end

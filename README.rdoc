@@ -1,12 +1,15 @@
 ==README
 
-Restaurant is the only RESTful resource as of now. I am in the process of setting up Yelp API 
-to streamline the process of searching and adding restaurants
 
-The eventual goal of this app is to allow users to post their favorite restaurants and find similar
-restaurants that they havent tried. A restaurants show page will (hopefully/eventually) show the users that have liked it, as well as the restaurants that are most liked by users that also like said restaurant
+HEROKU deployed URL
 
-Users will have the ability to customize their own page with a profile photo and bio. The tentative plan is for users
-to have a top 5 restaurant list, along with a favorite cheap restaurant and favorite splurge restaurant. In addition, they can also have a list of recommended places.
+http://foodease.herokuapp.com/
 
+FoodEase allows users to post their favorite restaurants and find new restaurants by comparing the restaurants liked by users with similar taste.
 
+In order to suggest restaurants for an individual user, FoodEase compares the restaurants liked by people that like the same restaurants as said user. For now, the model is fairly simplistic, finding the most liked restaurants among those users with a shared liked restaurant. There’s definitely room for improvement here, will be easier to test with more data.
+
+In order to suggest similar restaurants when looking at a restaurant’s page, FoodEase finds the most liked restaurants by users that liked the restaurant being viewed.
+
+The primary way to add restaurants to the app is through searching the Yelp API. This helps homogenize the data as much as possible and avoid users creating invalid restaurants
+. For now, I am allowing users to add restaurant info manually as well, something I will probably remove eventually.

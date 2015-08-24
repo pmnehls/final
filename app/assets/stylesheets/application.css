@@ -177,6 +177,15 @@ h2 {
 
 }
 
+.landing-thumbnail {
+ height: 250px;
+ border-radius: 50px;
+ border: 2px solid black;
+ float: right;
+ margin-right: 5px;
+
+}
+
 img {
  float: center;
  /*margin-right: 40px;*/

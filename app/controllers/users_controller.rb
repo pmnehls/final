@@ -30,7 +30,8 @@ class UsersController < ApplicationController
 		@user.password_confirmation = params[:password_confirmation]
 
 		if @user.save
-			flash[:notice] = "Sign Up Successful!"
+			session[:user_id] = @user.id
+			flash[:notice] = "Welcome #{@user.username}!"
 			redirect_to root_url
 		else
 			render 'new'
