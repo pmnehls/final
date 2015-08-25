@@ -14,7 +14,7 @@ class ListsController < ApplicationController
 		else
 			flash[:error] ="#{r.name} was already on your wall."
 		end
-		redirect_to root_url
+		redirect_to "/lists/#{session[:user_id]}"
 	end
 
 	def show
@@ -23,7 +23,7 @@ class ListsController < ApplicationController
 	end
 
 	def recommend
-		
+
 	end
 
 	def destroy

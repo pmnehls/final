@@ -6,11 +6,15 @@
 	</p>
 
 	<% @user = User.find(session[:user_id]) %>
+
 	<% connected_users = List.where(:restaurant_id => @user.restaurants) %>
 
 	<% connected_users = connected_users.where.not(:user_id => session[:user_id]) %>
-	<% connected_users = connected_users.uniq.pluck(:user_id) %>
-	<% connected_restaurants = List.where(:user_id => connected_users) %>
+
+	<% cu = connected_users.pluck(:user_id) %>
+
+	<% connected_restaurants = List.where(:user_id => cu) %>
+
 	<% connected_restaurants = connected_restaurants.where.not(:restaurant_id => @user.restaurants) %>
 
 	<% top = connected_restaurants.group('restaurant_id').order('count_restaurant_id DESC').limit(12).count('restaurant_id').to_a %>

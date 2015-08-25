@@ -7,7 +7,7 @@ http://foodease.herokuapp.com/
 
 FoodEase allows users to post their favorite restaurants and find new restaurants by comparing the restaurants liked by users with similar taste.
 
-In order to suggest restaurants for an individual user, FoodEase compares the restaurants liked by people that like the same restaurants as said user. For now, the model is fairly simplistic, finding the most liked restaurants among those users with a shared liked restaurant. There’s definitely room for improvement here, will be easier to test with more data.
+In order to suggest restaurants for an individual user, FoodEase compares the restaurants liked by people that like the same restaurants as said user. The model gives more weight to other users that have multiple restaurants in common with the current user.
 
 In order to suggest similar restaurants when looking at a restaurant’s page, FoodEase finds the most liked restaurants by users that liked the restaurant being viewed.
 
