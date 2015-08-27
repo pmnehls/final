@@ -23,7 +23,7 @@
 		<% end %>
 	<% end %>
 
-	<% top = res_hash.sort_by{|k,v| v}.reverse%>
+	<% top = res_hash.sort_by{|k,v| v}.reverse.first 12%>
 
 	<% top.in_groups_of(3, false) do |top_rows| %>
 		<div class="row">
