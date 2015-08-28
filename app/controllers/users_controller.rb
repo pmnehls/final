@@ -14,7 +14,6 @@ class UsersController < ApplicationController
     else
       @user = User.find(params[:id])
     end
-		# @user = User.find(session[:user_id])
 	end
 
 	def new
